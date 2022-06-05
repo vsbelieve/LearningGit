@@ -63,7 +63,24 @@ public class FindDataTree {
       return flag;
 
   }
-
+  public static ArrayList<Integer> nodeToRootPath(Node node, int data){
+    if(node.data== data){
+    ArrayList<Integer> list = new ArrayList<Integer>();
+     list.add(node.data);
+     return list;
+    } // if and if only if the data is found the list will have some data
+ 
+    for (Node child : node.children) {
+      ArrayList<Integer> ptc =(nodeToRootPath(child, data)); // equating list new ptc to the returned list
+      
+      if(ptc.size() > 0 ){
+        ptc.add(node.data);
+        return ptc;
+       }
+    }
+     return new ArrayList<>(); // return an empty array list
+  }
+ 
   public static void main(String[] args) throws Exception {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     int n = Integer.parseInt(br.readLine());
