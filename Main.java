@@ -143,6 +143,31 @@ public class Main {
     
   }
 
+   // special node function returns the last node of the element
+   private static Node getTail(Node node) {
+    while ( node.children.size() ==1 ) {
+      node = node.children.get(0);
+      getTail(node);
+    }
+     return node; 
+  }
+
+  public static void linearize(Node node){
+    // pre order
+    while(node.children.size()> 1){
+        Node last = node.children.remove(node.children.size()-1); // get last
+        Node sl = node.children.get(node.children.size()-1); // get second last
+        Node slt = getTail(sl);
+        slt.children.add(last);
+    }
+
+    for (Node child : node.children) {
+      linearize(child); //vishwas or faith that it will return the result
+    }
+    
+  }
+
+
   public static void main(String[] args) throws Exception {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     int n = Integer.parseInt(br.readLine());
