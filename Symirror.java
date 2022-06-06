@@ -106,6 +106,87 @@ public class Symirror {
   return true;
     
   }
+  static Node Predecessor;
+  static Node Successor;
+  static int state;
+  // finds the successor and predecessor
+  public static void PredecessorandSuccessor(Node node , int data){
+      if(state == 0){
+        if(node.data == data){
+          state = 1; // change state so that predecessor data is saved.
+        } else{
+          Predecessor = node;
+      }
+    }
+     else if(state == 1){
+        Successor = node;
+        state = 2;
+      }
+
+    for(Node child : node.children){
+       PredecessorandSuccessor(child, data);
+    }
+  }
+
+  static int ceil;
+  static int floor;
+  public static void ceilAndFloor(Node node, int data) {
+    if(node.data > data && node.data != data){
+      ceil = Math.min(ceil, node.data);
+    }
+    else if( node.data < data && node.data != data){
+      floor = Math.max(floor, node.data);
+    }
+
+    for(Node child : node.children){
+      ceilAndFloor(child, data);
+    }
+  }
+  
+  static int msn;
+  static int ms;
+  public static int SubtreeSum(Node node) { // returns sum and node of subtreesum
+    int sum = 0;
+    
+    for (Node child : node.children) {
+      int csum = SubtreeSum(child);
+      sum +=  csum;
+ 
+    }
+    sum += node.data; // the node data also gets added by this. 
+    
+    if(sum> ms){
+      msn = node.data;
+      ms = sum;
+    }
+
+    return sum;
+    
+  }
+  
+  static int dia = Integer.MIN_VALUE;
+  public static int diameter(Node node) {
+    int h =-1 ;
+
+    int sh = -1;
+    for (Node child : node.children) {
+       int ch = diameter(child);
+
+      if(ch> h){
+        sh = h;
+        h = ch;
+      } else if(ch> sh){
+          sh = ch;
+      }
+
+    }
+
+    int res = h +sh+ 2;
+    if( res > dia) dia = res;
+    
+    h += 1;
+    return h;
+  }
 
   public static void main(String[] args) throws Exception {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
