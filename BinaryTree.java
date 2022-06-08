@@ -208,6 +208,15 @@ public class BinaryTree {
     return new ArrayList<>();
 
   }
+  // prints all nodes at a given height lvl in preorder traversing
+  public static void printKLevelsDown(Node node, int k){    
+    // base case
+    if(node== null ){ return;} 
+    if (k == 0 ){System.out.println(node.data);} // print
+    printKLevelsDown(node.left, k-1 ); // recursion
+    printKLevelsDown(node.right, k-1 ); // recursion   
+
+  }
   public static void main(String[] args) throws Exception {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     int n = Integer.parseInt(br.readLine());

@@ -105,22 +105,37 @@ public class printnodesKdistaway {
     return arr;
     
   }
+  // print all values at a level k
   public static void printKLevelsDown(Node node, int k, Node block){    
     // base case
     if(node== null || k<0 || node == block){ return;} 
     if ( k == 0 ){System.out.println(node.data);} // print
     printKLevelsDown(node.left, k-1 , block); // recursion
     printKLevelsDown(node.right, k-1 , block ); // recursion   
-  }
-  
+    }
+//   this function prints node k far away from any given node
   static ArrayList<Integer> res = new ArrayList<>();
   public static void printKNodesFar(Node node, int data, int k) {
     ArrayList<Node> nodes = nodetorootpath(node, data);
+    
     for(int i =0; i < nodes.size() && i<=k ; i++) {
     printKLevelsDown( nodes.get(i) , k- i, i == 0 ? null : nodes.get(i-1));
-
     }
   }
+//  this function can print all paths of a tree from node to leaf with their sum as well within some range or not
+    public static void pathToLeafFromRoot(Node node, String path, int sum, int lo, int hi){
+    // base case for default node
+    if(node == null){ return;} // got error here, careful
+
+    if(node.left == null && node.right == null){ // when both the child are null we will reach here for every node
+      sum += node.data; // increase the sum only as path is decided w/ lo & hi
+      if(sum >= lo && sum <= hi){
+        System.out.println(path + node.data +""); }
+      return;
+    }      
+    pathToLeafFromRoot(node.left, path + node.data + " ", sum+node.data, lo, hi);
+    pathToLeafFromRoot(node.right, path + node.data + " ", sum+node.data, lo, hi);
+    }
 
   public static void main(String[] args) throws Exception {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
