@@ -130,7 +130,84 @@ public class BinaryTree {
 
     return ht;
   }
+  // code for level order traverseal in binary tree
+  public static void levelOrder(Node node) {
+    Queue<Node> q = new ArrayDeque<>();
+     q.add(node);
+     
+     while ( q.size()> 0 ) { 
+     int siz = q.size();
+       for (int i = 0; i < siz; i++) { // all inside one loop
+         Node val = q.remove(); // remove 
+         System.out.print(val.data + " "); // print
+ 
+         if(val.left != null){
+           q.add(val.left);  // add child
+         } 
+         if (val.right != null) {
+           q.add(val.right);
+         }
+       }
+       System.out.println();        
+     } 
+   }
+   // this finds and tells if the node is from the tree
+   public static boolean find(Node node, int data){
+    // base case 
+    if(node == null){ // if node is null
+      return false;
+    }
+    
+    if(node.data == data){
+      return true;
+    }
+    
+    boolean lctc = find(node.left, data); //have faith this will work
+    if(lctc){ // works only when left call returns true
+      return true;
+    }
 
+    boolean rctc = find(node.right, data); //have faith this will work
+    if(rctc){ // works only when right call returns true
+      return true;
+    }
+
+    return false;
+  }
+  // this gives us the node to root path of the function
+  static ArrayList<Integer> arr = new ArrayList<>();
+  public static ArrayList<Integer> nodeToRootPath(Node node, int data){
+    
+    if(node == null){
+      return arr;
+    }
+    
+    if(node.data == data){
+      arr.add(node.data);
+      return arr;
+    } 
+      
+      ArrayList<Integer> nrpl =  nodeToRootPath(node.left, data);
+      if(nrpl.size()> 0){
+        nrpl.add(node.data);
+        return nrpl;
+      } 
+
+      ArrayList<Integer> nrpr =  nodeToRootPath(node.right, data);
+      if(nrpr.size()> 0){
+         nrpr.add(node.data);
+         return nrpr; 
+      }   
+   
+    if(nrpl.size() > 0){
+      return nrpl;
+    } else if(nrpr.size() > 0){
+      return nrpr;
+    } 
+
+    return new ArrayList<>();
+
+  }
   public static void main(String[] args) throws Exception {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     int n = Integer.parseInt(br.readLine());
