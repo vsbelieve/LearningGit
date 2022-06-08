@@ -108,6 +108,48 @@ public class clonebinarytree {
     return node;
     
   }
+  public static void printSingleChildNodes(Node node, Node parent){
+    if(node == null){
+      return;}
+
+    printSingleChildNodes(node.left,node);
+    printSingleChildNodes(node.right,node);
+    
+    if(parent != null && (parent.right == null || parent.left == null) ){
+      System.out.println(node.data);
+      }
+
+  }
+  // this code removes leaves from the binary tree important as it introduces newer concepts of tree deletion
+  public static Node removeLeaves(Node node){
+    if (node == null){
+      return null;
+    }
+    if(node.left == null && node.right == null){
+      return null;
+    }
+    Node nlr = removeLeaves(node.left); // receiving them in left and right is very important othgerwise they'll not get upadted.
+    Node nrr = removeLeaves(node.right);
+    
+    node.left = nlr;
+    node.right = nrr;
+
+    return node;
+  }
+  // this results in the diameter of the binary tree easy 3 cases code
+  public static int diameter1(Node node) {
+    if(node == null){
+      return 0;} // finding height in terms of edges return 0 on last node   
+    // two variations in answers as the diameter may or may not pass through the root, it might be present in the left or right node itself
+    // using recursion to find the max diameter in left node
+    int dl = diameter1(node.left);
+    // same for right side
+    int dr = diameter1(node.right);
+    // last one is for our root's diameter
+    int f = height(node.left) + height(node.right) +2;
+
+    return Math.max(Math.max(dl,dr),f);
+  }
 
   public static void main(String[] args) throws Exception {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
