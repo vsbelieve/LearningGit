@@ -136,6 +136,7 @@ public class printnodesKdistaway {
     pathToLeafFromRoot(node.left, path + node.data + " ", sum+node.data, lo, hi);
     pathToLeafFromRoot(node.right, path + node.data + " ", sum+node.data, lo, hi);
     }
+    
 
   public static void main(String[] args) throws Exception {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
